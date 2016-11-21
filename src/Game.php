@@ -2,13 +2,16 @@
 
 namespace RJozwiak\GameOfLifeKata;
 
+/**
+ * Class Game
+ * @package RJozwiak\GameOfLifeKata
+ */
 class Game
 {
     /**
-     * @var array
+     * @var CellsGrid
      */
     private $cellsGrid;
-
 
     /**
      * Game constructor.
@@ -16,25 +19,26 @@ class Game
      */
     public function __construct(array $cellsGrid)
     {
-        $this->cellsGrid = $cellsGrid;
+        $this->cellsGrid = CellsGridFactory::createFromArray($cellsGrid);
     }
 
     public function nextGeneration() : void
     {
-        $newCellsGrid = $this->cellsGrid;
+        // TODO: issue with clone $this->cellsGrid
+        $newCellsGrid = CellsGridFactory::createFromArray($this->cellsGrid->toArray());
 
-        $xCount = count($this->cellsGrid);
-        for ($i = 0; $i < $xCount; $i++) {
-            $yCount = count($this->cellsGrid[$i]);
-            for ($j = 0; $j < $yCount; $j++) {
-                $aliveNeighbours = $this->aliveNeighbours($i, $j);
-                if ($this->cellsGrid[$i][$j]) {
+        $height = $this->cellsGrid->height();
+        for ($x = 0; $x < $height; $x++) {
+            $width = $this->cellsGrid->width();
+            for ($y = 0; $y < $width; $y++) {
+                $aliveNeighbours = $this->cellsGrid->aliveNeighboursOfCellAt($x, $y);
+                if ($this->cellsGrid->isCellAliveAt($x, $y)) {
                     if ($aliveNeighbours < 2 || $aliveNeighbours > 3) {
-                        $newCellsGrid[$i][$j] = false;
+                        $newCellsGrid->diesAt($x, $y);
                     }
                 } else {
                     if ($aliveNeighbours == 3) {
-                        $newCellsGrid[$i][$j] = true;
+                        $newCellsGrid->reviveAt($x, $y);
                     }
                 }
             }
@@ -44,47 +48,10 @@ class Game
     }
 
     /**
-     * @param int $x
-     * @param int $y
-     * @return int
-     */
-    private function aliveNeighbours(int $x, int $y) : int
-    {
-        $count = 0;
-
-        if (isset($this->cellsGrid[$x - 1][$y]) && $this->cellsGrid[$x - 1][$y]) {
-            $count++;
-        }
-        if (isset($this->cellsGrid[$x - 1][$y - 1]) && $this->cellsGrid[$x - 1][$y - 1]) {
-            $count++;
-        }
-        if (isset($this->cellsGrid[$x][$y - 1]) && $this->cellsGrid[$x][$y - 1]) {
-            $count++;
-        }
-        if (isset($this->cellsGrid[$x + 1][$y - 1]) && $this->cellsGrid[$x + 1][$y - 1]) {
-            $count++;
-        }
-        if (isset($this->cellsGrid[$x + 1][$y]) && $this->cellsGrid[$x + 1][$y]) {
-            $count++;
-        }
-        if (isset($this->cellsGrid[$x + 1][$y + 1]) && $this->cellsGrid[$x + 1][$y + 1]) {
-            $count++;
-        }
-        if (isset($this->cellsGrid[$x][$y + 1]) && $this->cellsGrid[$x][$y + 1]) {
-            $count++;
-        }
-        if (isset($this->cellsGrid[$x - 1][$y + 1]) && $this->cellsGrid[$x - 1][$y + 1]) {
-            $count++;
-        }
-
-        return $count;
-    }
-
-    /**
      * @return array
      */
     public function cellsGrid() : array
     {
-        return $this->cellsGrid;
+        return $this->cellsGrid->toArray();
     }
 }

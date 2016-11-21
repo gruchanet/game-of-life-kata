@@ -3,7 +3,10 @@
     "type": "project",
     "license": "MIT",
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "myclabs/php-enum": "^1.5.0",
+        "webmozart/assert": "^1.1.0"
+    },
     "require-dev": {
         "phpspec/phpspec": "^3.1.1"
     },
