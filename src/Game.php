@@ -7,40 +7,40 @@ class Game
     /**
      * @var array
      */
-    private $grid;
+    private $cellsGrid;
 
 
     /**
      * Game constructor.
-     * @param array $grid
+     * @param array $cellsGrid
      */
-    public function __construct(array $grid)
+    public function __construct(array $cellsGrid)
     {
-        $this->grid = $grid;
+        $this->cellsGrid = $cellsGrid;
     }
 
     public function nextGeneration() : void
     {
-        $newGrid = $this->grid;
+        $newCellsGrid = $this->cellsGrid;
 
-        $xCount = count($this->grid);
+        $xCount = count($this->cellsGrid);
         for ($i = 0; $i < $xCount; $i++) {
-            $yCount = count($this->grid[$i]);
+            $yCount = count($this->cellsGrid[$i]);
             for ($j = 0; $j < $yCount; $j++) {
                 $aliveNeighbours = $this->aliveNeighbours($i, $j);
-                if ($this->grid[$i][$j]) {
+                if ($this->cellsGrid[$i][$j]) {
                     if ($aliveNeighbours < 2 || $aliveNeighbours > 3) {
-                        $newGrid[$i][$j] = false;
+                        $newCellsGrid[$i][$j] = false;
                     }
                 } else {
                     if ($aliveNeighbours == 3) {
-                        $newGrid[$i][$j] = true;
+                        $newCellsGrid[$i][$j] = true;
                     }
                 }
             }
         }
 
-        $this->grid = $newGrid;
+        $this->cellsGrid = $newCellsGrid;
     }
 
     /**
@@ -52,28 +52,28 @@ class Game
     {
         $count = 0;
 
-        if (isset($this->grid[$x - 1][$y]) && $this->grid[$x - 1][$y]) {
+        if (isset($this->cellsGrid[$x - 1][$y]) && $this->cellsGrid[$x - 1][$y]) {
             $count++;
         }
-        if (isset($this->grid[$x - 1][$y - 1]) && $this->grid[$x - 1][$y - 1]) {
+        if (isset($this->cellsGrid[$x - 1][$y - 1]) && $this->cellsGrid[$x - 1][$y - 1]) {
             $count++;
         }
-        if (isset($this->grid[$x][$y - 1]) && $this->grid[$x][$y - 1]) {
+        if (isset($this->cellsGrid[$x][$y - 1]) && $this->cellsGrid[$x][$y - 1]) {
             $count++;
         }
-        if (isset($this->grid[$x + 1][$y - 1]) && $this->grid[$x + 1][$y - 1]) {
+        if (isset($this->cellsGrid[$x + 1][$y - 1]) && $this->cellsGrid[$x + 1][$y - 1]) {
             $count++;
         }
-        if (isset($this->grid[$x + 1][$y]) && $this->grid[$x + 1][$y]) {
+        if (isset($this->cellsGrid[$x + 1][$y]) && $this->cellsGrid[$x + 1][$y]) {
             $count++;
         }
-        if (isset($this->grid[$x + 1][$y + 1]) && $this->grid[$x + 1][$y + 1]) {
+        if (isset($this->cellsGrid[$x + 1][$y + 1]) && $this->cellsGrid[$x + 1][$y + 1]) {
             $count++;
         }
-        if (isset($this->grid[$x][$y + 1]) && $this->grid[$x][$y + 1]) {
+        if (isset($this->cellsGrid[$x][$y + 1]) && $this->cellsGrid[$x][$y + 1]) {
             $count++;
         }
-        if (isset($this->grid[$x - 1][$y + 1]) && $this->grid[$x - 1][$y + 1]) {
+        if (isset($this->cellsGrid[$x - 1][$y + 1]) && $this->cellsGrid[$x - 1][$y + 1]) {
             $count++;
         }
 
@@ -83,8 +83,8 @@ class Game
     /**
      * @return array
      */
-    public function grid() : array
+    public function cellsGrid() : array
     {
-        return $this->grid;
+        return $this->cellsGrid;
     }
 }

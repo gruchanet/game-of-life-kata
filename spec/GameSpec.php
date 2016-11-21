@@ -22,9 +22,9 @@ class GameSpec extends ObjectBehavior
         $this->shouldHaveType(Game::class);
     }
 
-    function it_returns_initialized_grid()
+    function it_returns_initialized_cells_grid()
     {
-        $this->grid()->shouldBe([]);
+        $this->cellsGrid()->shouldBe([]);
     }
 
     function it_alive_cells_should_die_in_next_generation_caused_by_underpopulation()
@@ -97,6 +97,6 @@ class GameSpec extends ObjectBehavior
     {
         $this->beConstructedWith($initialGrid);
         $this->nextGeneration();
-        $this->grid()->shouldBe($nextGenerationGrid);
+        $this->cellsGrid()->shouldBe($nextGenerationGrid);
     }
 }
