@@ -2,6 +2,10 @@
 
 namespace RJozwiak\GameOfLifeKata;
 
+/**
+ * Class CellsGridFactory
+ * @package RJozwiak\GameOfLifeKata
+ */
 class CellsGridFactory
 {
     /**
