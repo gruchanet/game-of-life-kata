@@ -3,6 +3,7 @@
 namespace spec\RJozwiak\GameOfLifeKata;
 
 use RJozwiak\GameOfLifeKata\Cell;
+use RJozwiak\GameOfLifeKata\Cell\NormalCell;
 use RJozwiak\GameOfLifeKata\CellsGrid;
 use PhpSpec\ObjectBehavior;
 
@@ -21,7 +22,7 @@ class CellsGridSpec extends ObjectBehavior
 
     function it_throws_exception_on_invalid_grid_cells_types()
     {
-        $this->beConstructedWith([[new \stdClass()]]);
+        $this->beConstructedWith([[\stdClass::class]]);
 
         $this->shouldThrow(\InvalidArgumentException::class)->duringInstantiation();
     }
@@ -29,8 +30,8 @@ class CellsGridSpec extends ObjectBehavior
     function it_throws_exception_on_invalid_grid_cells_rows_width()
     {
         $this->beConstructedWith([
-            [new Cell(true)],
-            [new Cell(false), new Cell(true)],
+            [Cell::class],
+            [Cell::class, Cell::class],
         ]);
 
         $this->shouldThrow(\InvalidArgumentException::class)->duringInstantiation();
@@ -38,7 +39,10 @@ class CellsGridSpec extends ObjectBehavior
 
     function its_specified_cell_dies()
     {
-        $this->beConstructedWith([[new Cell(true)]]);
+        $cell = new NormalCell(true);
+        $this->beConstructedWith([[$cell]]);
+
+//        $cell->die()->shouldBeCalled();
 
         $this->diesAt(0, 0);
         $this->isCellAliveAt(0, 0)->shouldBe(false);
@@ -46,7 +50,10 @@ class CellsGridSpec extends ObjectBehavior
 
     function it_revives_specified_cell()
     {
-        $this->beConstructedWith([[new Cell(false)]]);
+        $cell = new NormalCell(false);
+        $this->beConstructedWith([[$cell]]);
+
+//        $cell->revive()->shouldBeCalled();
 
         $this->reviveAt(0, 0);
         $this->isCellAliveAt(0, 0)->shouldBe(true);
@@ -55,20 +62,20 @@ class CellsGridSpec extends ObjectBehavior
     function it_returns_alive_neighbours_count_of_cell()
     {
         $grid = [
-            [new Cell(true), new Cell(false), new Cell(true)],
-            [new Cell(true), new Cell(true), new Cell(false)],
-            [new Cell(false), new Cell(true), new Cell(true)]
+            [new NormalCell(true), new NormalCell(false), new NormalCell(true)],
+            [new NormalCell(true), new NormalCell(true), new NormalCell(false)],
+            [new NormalCell(false), new NormalCell(true), new NormalCell(true)]
         ];
         $this->beConstructedWith($grid);
 
         $this->aliveNeighboursOfCellAt(1, 1)->shouldBe(5);
     }
 
-    function it_returns_plain_array_representation()
+    function it_returns_correct_array_representation()
     {
         $grid = [
-            [new Cell(true), new Cell(false)],
-            [new Cell(false), new Cell(true)]
+            [new NormalCell(true), new NormalCell(false)],
+            [new NormalCell(false), new NormalCell(true)]
         ];
         $this->beConstructedWith($grid);
 
@@ -82,8 +89,8 @@ class CellsGridSpec extends ObjectBehavior
     function it_returns_correct_grid_height()
     {
         $grid = [
-            [new Cell(true)],
-            [new Cell(false)],
+            [new NormalCell(true)],
+            [new NormalCell(false)],
         ];
         $this->beConstructedWith($grid);
 
@@ -93,7 +100,7 @@ class CellsGridSpec extends ObjectBehavior
     function it_returns_correct_grid_width()
     {
         $grid = [
-            [new Cell(true), new Cell(false)],
+            [new NormalCell(true), new NormalCell(false)],
         ];
         $this->beConstructedWith($grid);
 

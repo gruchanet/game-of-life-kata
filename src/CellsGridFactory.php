@@ -2,6 +2,8 @@
 
 namespace RJozwiak\GameOfLifeKata;
 
+use RJozwiak\GameOfLifeKata\Cell\NormalCell;
+
 /**
  * Class CellsGridFactory
  * @package RJozwiak\GameOfLifeKata
@@ -21,7 +23,8 @@ class CellsGridFactory
 
         for ($x = 0; $x < $height; $x++) {
             for ($y = 0; $y < $width; $y++) {
-                $cells[$x][$y] = new Cell($grid[$x][$y]);
+                // TODO: for know NormalCell is hardcoded
+                $cells[$x][$y] = new NormalCell($grid[$x][$y]);
             }
         }
 

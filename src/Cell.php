@@ -7,10 +7,10 @@ namespace RJozwiak\GameOfLifeKata;
  * @package RJozwiak\GameOfLifeKata
  * @internal
  */
-class Cell
+abstract class Cell
 {
     /** @var bool */
-    private $alive;
+    protected $alive;
 
     /**
      * Cell constructor.
@@ -24,18 +24,12 @@ class Cell
     /**
      * @internal
      */
-    public function die() : void
-    {
-        $this->alive = false;
-    }
+    abstract public function die() : void;
 
     /**
      * @internal
      */
-    public function revive() : void
-    {
-        $this->alive = true;
-    }
+    abstract public function revive() : void;
 
     /**
      * @return bool
