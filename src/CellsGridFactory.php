@@ -23,7 +23,7 @@ class CellsGridFactory
 
         for ($x = 0; $x < $height; $x++) {
             for ($y = 0; $y < $width; $y++) {
-                // TODO: for know NormalCell is hardcoded
+                // TODO: for now NormalCell is hardcoded
                 $cells[$x][$y] = new NormalCell($grid[$x][$y]);
             }
         }
